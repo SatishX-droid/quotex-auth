@@ -1,13 +1,16 @@
 export default async function handler(req, res) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method Not Allowed" });
+    if (req.method !== 'POST') {
+        return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
     const { status, uid, payout } = req.query;
-    
-    if (status !== "ftd" || parseFloat(payout) < 12) {
-        return res.status(400).json({ error: "Trader not eligible" });
+
+    if (status === 'ftd' && parseFloat(payout) >= 12) {
+        return res.status(200).json({ verified: true, message: 'Trader ID verified' });
+    } else {
+        return res.status(400).json({ verified: false, message: 'Deposit requirement not met' });
     }
+}
 
     // Forward trader ID to Telegram bot
     const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
