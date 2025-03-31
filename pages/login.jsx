@@ -1,25 +1,39 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-export default function Login() {
-    const [traderId, setTraderId] = useState("");
-    const [message, setMessage] = useState("");
+export default function Home() {
+    const [traderId, setTraderId] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
+        setLoading(true);
 
-        const res = await fetch("/api/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ traderId }),
-        });
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ traderId }),
+            });
 
-        const data = await res.json();
-        setMessage(data.message || data.error);
+            const data = await response.json();
+
+            if (response.ok) {
+                window.location.href = '/signal'; // Redirect to signal page
+            } else {
+                setError(data.message || 'Invalid Trader ID');
+            }
+        } catch (err) {
+            setError('Server error. Try again later.');
+        }
+
+        setLoading(false);
     };
 
     return (
         <div>
-            <h2>Login / Register</h2>
+            <h1>Login / Register</h1>
             <form onSubmit={handleSubmit}>
                 <label>Quotex Trader ID:</label>
                 <input
@@ -28,9 +42,11 @@ export default function Login() {
                     onChange={(e) => setTraderId(e.target.value)}
                     required
                 />
-                <button type="submit">Submit</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Checking...' : 'Submit'}
+                </button>
             </form>
-            <p>{message}</p>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 }
