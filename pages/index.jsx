@@ -1,31 +1,31 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Home() {
-  const [traderId, setTraderId] = useState('');
-  const [error, setError] = useState('');
+  const [traderId, setTraderId] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ traderId }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        window.location.href = '/signal'; // Redirect to signal page
+        window.location.href = "/signal"; // Redirect to signal page
       } else {
-        setError(data.message || 'Invalid Trader ID');
+        setError(data.message || "Invalid Trader ID");
       }
     } catch (err) {
-      setError('Server error. Try again later.');
+      setError("Server error. Try again later.");
     }
 
     setLoading(false);
@@ -43,10 +43,10 @@ export default function Home() {
           required
         />
         <button type="submit" disabled={loading}>
-          {loading ? 'Checking...' : 'Submit'}
+          {loading ? "Checking..." : "Submit"}
         </button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
