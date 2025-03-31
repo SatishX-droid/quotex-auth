@@ -1,15 +1,18 @@
 {
   "name": "trade-with-google",
   "version": "1.0.0",
+  "description": "Quotex trading integration project",
+  "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "next": "12.0.7",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "node-fetch": "^2.6.1"  // Added node-fetch dependency
-  }
+    "next": "^12.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {}
 }
