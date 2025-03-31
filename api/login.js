@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 // Simulated function to check postback status
 async function checkPostbackStatus(traderId) {
     // Here, you should check your Vercel postback endpoint for verification
-    const response = await fetch(`https://trade-ten-beta.vercel.app/api/postback?uid=${traderId}`);
+    const response = await fetch(`https://trade-with-google.vercel.app/api/postback.php?uid=${traderId}`);
     const data = await response.json();
     return data.verified === true; // Replace this with actual logic
 }
